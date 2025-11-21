@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Configuration - Claude Control Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body>
+    <div class="main-content" style="margin-left: 0; max-width: 800px; margin: 0 auto; padding: 50px 30px;">
+        <div class="card">
+            <div class="card-header" style="background-color: #d63031;">
+                <h2 class="text-white"><i class="fas fa-redo"></i> Reset Configuration</h2>
+            </div>
+            <div class="card-body">
+                <h4>Fix Pre-Population Issue</h4>
+                <p class="lead">This will clear your current configuration and reload with all 4 default sections.</p>
+                
+                <div class="alert" style="background-color: #fdcb6e; border: none;">
+                    <strong><i class="fas fa-exclamation-triangle"></i> Note:</strong> This will erase any custom sections you've created. Your configuration will reset to the defaults.
+                </div>
+                
+                <h5>What will be loaded:</h5>
+                <ul>
+                    <li><strong>Core Identity & Purpose</strong> - Your work style and priorities</li>
+                    <li><strong>Critical Rules (Binary)</strong> - All NEVER/ALWAYS rules</li>
+                    <li><strong>Decision Trees & Logic</strong> - Tool selection and information handling</li>
+                    <li><strong>Design System & Preferences</strong> - American Palette and design rules</li>
+                </ul>
+                
+                <div class="d-grid gap-3 mt-4">
+                    <button class="btn btn-danger btn-lg" onclick="resetConfiguration()">
+                        <i class="fas fa-redo"></i> Reset Configuration Now
+                    </button>
+                    <a href="index.html" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Cancel - Go Back
+                    </a>
+                </div>
+                
+                <div id="status" class="mt-4" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        function resetConfiguration() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Resetting configuration...</div>';
+            
+            // Clear localStorage
+            localStorage.removeItem('claude_control_center_config');
+            
+            // Wait a moment
+            setTimeout(() => {
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <h5><i class="fas fa-check-circle"></i> Configuration Reset!</h5>
+                        <p>Your configuration has been cleared and will reload with defaults.</p>
+                        <p class="mb-0">Click below to go to the CLAUDE.md Builder and see your 4 pre-loaded sections!</p>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="pages/claude-builder.html" class="btn btn-success btn-lg">
+                            <i class="fas fa-file-code"></i> Open CLAUDE.md Builder
+                        </a>
+                        <a href="index.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home"></i> Go to Dashboard
+                        </a>
+                    </div>
+                `;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

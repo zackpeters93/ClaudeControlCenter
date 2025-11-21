@@ -1,0 +1,144 @@
+{
+  "environments": {
+    "desktop": {
+      "name": "Claude Desktop",
+      "mcpCount": 27,
+      "skills": [
+        {
+          "id": "sequential-thinking",
+          "name": "Sequential Thinking",
+          "category": "Planning",
+          "enabled": true,
+          "priority": "critical",
+          "usage": "Complex project planning, breaking down tasks, reflective problem-solving",
+          "whenToUse": "Any complex task requiring multi-step analysis",
+          "example": "Planning the architecture of a new application"
+        },
+        {
+          "id": "desktop-commander",
+          "name": "Desktop Commander",
+          "category": "File Operations",
+          "enabled": true,
+          "priority": "critical",
+          "usage": "All file operations, terminal commands, data analysis, file search"
+        },
+        {
+          "id": "context7",
+          "name": "Context7 / Memory",
+          "category": "Knowledge",
+          "enabled": true,
+          "priority": "high",
+          "usage": "Documentation lookup, SDK references, knowledge graph management",
+          "whenToUse": "Need current documentation or to store/retrieve project context"
+        },
+        {
+          "id": "web-search",
+          "name": "Web Search",
+          "category": "Research",
+          "enabled": true,
+          "priority": "critical",
+          "usage": "Current events, verification, research, fact-checking",
+          "whenToUse": "Information beyond knowledge cutoff or needs verification"
+        },
+        {
+          "id": "web-fetch",
+          "name": "Web Fetch",
+          "category": "Research",
+          "enabled": true,
+          "priority": "high",
+          "usage": "Retrieve full webpage content from specific URLs"
+        },
+        {
+          "id": "google-drive-search",
+          "name": "Google Drive Search",
+          "category": "Data",
+          "enabled": true,
+          "priority": "high",
+          "usage": "Search internal documents, project files, company data",
+          "whenToUse": "Need to find internal documents or personal files"
+        },
+        {
+          "id": "google-drive-fetch",
+          "name": "Google Drive Fetch",
+          "category": "Data",
+          "enabled": true,
+          "priority": "high",
+          "usage": "Retrieve specific Google Docs by ID",
+          "whenToUse": "Have a specific Google Doc URL to read"
+        },
+        {
+          "id": "apple-notes",
+          "name": "Read and Write Apple Notes",
+          "category": "Data",
+          "enabled": true,
+          "priority": "medium",
+          "usage": "Access Apple Notes for quick reference and storage"
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "category": "Development",
+          "enabled": true,
+          "priority": "high",
+          "usage": "Repository management, code collaboration, version control",
+          "whenToUse": "Need to interact with GitHub repos, create branches, PRs"
+        },
+        {
+          "id": "docker",
+          "name": "Docker",
+          "category": "Development",
+          "enabled": true,
+          "priority": "medium",
+          "usage": "Container management and execution",
+          "whenToUse": "Working with containerized applications"
+        },
+        {
+          "id": "puppeteer",
+          "name": "Puppeteer",
+          "category": "Automation",
+          "enabled": true,
+          "priority": "medium",
+          "usage": "Browser automation, web scraping, testing",
+          "whenToUse": "Need to interact with websites programmatically"
+        },
+        {
+          "id": "zapier",
+          "name": "Zapier",
+          "category": "Integration",
+          "enabled": true,
+          "priority": "medium",
+          "usage": "Workflow automation and app integrations"
+        },
+        {
+          "id": "youtube",
+          "name": "YouTube Transcripts",
+          "category": "Media",
+          "enabled": true,
+          "priority": "low",
+          "usage": "Extract video transcripts for analysis"
+        },
+        {
+          "id": "google-maps",
+          "name": "Google Maps",
+          "category": "Location",
+          "enabled": true,
+          "priority": "low",
+          "usage": "Geocoding, directions, location services"
+        },
+        {
+          "id": "fetch-tool",
+          "name": "Fetch Tool",
+          "category": "Utility",
+          "enabled": true,
+          "priority": "medium",
+          "usage": "Generic URL fetching and content retrieval"
+        }
+      ]
+    },
+    "code": {
+      "name": "Claude Code",
+      "mcpCount": "varies",
+      "note": "MCP configuration varies, primarily development-focused"
+    }
+  }
+}

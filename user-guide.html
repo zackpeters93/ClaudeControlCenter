@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>User Guide - Claude Commander</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/custom.css">
+    
+    <style>
+        .guide-section {
+            scroll-margin-top: 20px;
+        }
+        
+        .feature-card {
+            border-left: 5px solid;
+            margin-bottom: 20px;
+        }
+        
+        .toc-link {
+            color: #0984e3;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .toc-link:hover {
+            background-color: #dfe6e9;
+            border-left-color: #0984e3;
+        }
+        
+        .toc-link.active {
+            background-color: #0984e3;
+            color: white;
+            border-left-color: #d63031;
+        }
+        
+        .screenshot-placeholder {
+            background-color: #f8f9fa;
+            border: 2px dashed #dfe6e9;
+            padding: 40px;
+            text-align: center;
+            color: #636e72;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip-box {
+            background-color: #d4edda;
+            border-left: 4px solid #00b894;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #fdcb6e;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .code-example {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fas fa-robot"></i> Claude</h2>
+            <p>Commander</p>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="index.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="pages/claude-builder.html"><i class="fas fa-file-code"></i> <span>CLAUDE.md Builder</span></a></li>
+            <li><a href="pages/design-system.html"><i class="fas fa-palette"></i> <span>Design System</span></a></li>
+            <li><a href="pages/skills-library.html"><i class="fas fa-wand-magic-sparkles"></i> <span>Skills Library</span></a></li>
+            <li><a href="pages/mcp-library.html"><i class="fas fa-plug"></i> <span>MCP Library</span></a></li>
+            <li><a href="pages/mcps-viewer.html"><i class="fas fa-plug"></i> <span>MCP Configuration</span></a></li><li><a href="pages/agents-manager.html"><i class="fas fa-users-cog"></i> <span>Agents & Subagents</span></a></li>
+            
+            <li><a href="pages/project-templates.html"><i class="fas fa-folder-tree"></i> <span>Project Templates</span></a></li>
+            <li><a href="pages/documentation-archive.html"><i class="fas fa-archive"></i> <span>Documentation Archive</span></a></li>
+            <li><a href="user-guide.html" class="active"><i class="fas fa-book"></i> <span>User Guide</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1><i class="fas fa-book"></i> Claude Commander - User Guide</h1>
+                <p class="lead">Complete guide to using your Claude configuration management system</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Table of Contents -->
+            <div class="col-md-3">
+                <div class="card sticky-top" style="top: 20px;">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-list"></i> Contents</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <nav class="nav flex-column">
+                            <a class="toc-link" href="#getting-started">Getting Started</a>
+                            <a class="toc-link" href="#dashboard">Dashboard</a>
+                            <a class="toc-link" href="#claude-builder">CLAUDE.md Builder</a>
+                            <a class="toc-link" href="#skills-library">Skills Library</a>
+                            <a class="toc-link" href="#agents-manager">Agents Manager</a>
+                            <a class="toc-link" href="#mcp-viewer">MCP Configuration</a>
+                            <a class="toc-link" href="#templates">Project Templates</a>
+                            <a class="toc-link" href="#archive">Documentation Archive</a>
+                            <a class="toc-link" href="#design-system">Design System</a>
+                            <a class="toc-link" href="#tips">Tips & Best Practices</a>
+                            <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Getting Started -->
+                <section id="getting-started" class="guide-section mb-5">
+                    <h2><i class="fas fa-play-circle"></i> Getting Started</h2>
+                    <p>Welcome to Claude Commander! This application helps you manage your Claude AI configurations, MCP skills, and project templates all in one place.</p>
+                    
+                    <h4>What is Claude Commander?</h4>
+                    <p>Claude Commander (CCC) is a comprehensive web-based tool for:</p>
+                    <ul>
+                        <li>Building and managing CLAUDE.md configuration files</li>
+                        <li>Browsing available MCP (Model Context Protocol) skills</li>
+                        <li>Understanding Claude Code agents and when to use them</li>
+                        <li>Viewing MCP server configurations</li>
+                        <li>Quick-starting new projects with templates</li>
+                        <li>Tracking configuration history with snapshots</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> All your data is stored locally in your browser using localStorage. Nothing is sent to external servers.
+                    </div>
+                    
+                    <h4>Quick Start</h4>
+                    <ol>
+                        <li>Open <code>index.html</code> in your web browser</li>
+                        <li>Navigate using the sidebar menu</li>
+                        <li>All changes are automatically saved</li>
+                        <li>Use "Export Config" to create backups</li>
+                    </ol>
+                </section>
+
+                <!-- Dashboard -->
+                <section id="dashboard" class="guide-section mb-5">
+                    <h2><i class="fas fa-home"></i> Dashboard</h2>
+                    <p>The Dashboard is your central hub for quick access to all features.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #0984e3;">
+                        <div class="card-body">
+                            <h5>Key Features</h5>
+                            <ul>
+                                <li><strong>Statistics Overview:</strong> See total skills, MCPs, agents, and templates at a glance</li>
+                                <li><strong>CLAUDE.md Status:</strong> View current configuration details and character count</li>
+                                <li><strong>Design System Preview:</strong> Quick reference to American Palette colors</li>
+                                <li><strong>Recent Activity:</strong> Track your latest changes and updates</li>
+                                <li><strong>Quick Actions:</strong> One-click access to common tasks</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Export & Import</h4>
+                    <p>Use the sidebar buttons to:</p>
+                    <ul>
+                        <li><strong>Export Config:</strong> Download your entire configuration as JSON</li>
+                        <li><strong>Import Config:</strong> Restore a previous configuration</li>
+                        <li><strong>Generate CLAUDE.md:</strong> Download your configuration as a markdown file</li>
+                    </ul>
+                </section>
+
+                <!-- CLAUDE.md Builder -->
+                <section id="claude-builder" class="guide-section mb-5">
+                    <h2><i class="fas fa-file-code"></i> CLAUDE.md Builder</h2>
+                    <p>Build custom configuration files to guide Claude's behavior across different contexts.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #d63031;">
+                        <div class="card-body">
+                            <h5>Creating Sections</h5>
+                            <ol>
+                                <li>Click the <code>+</code> button to add a new section</li>
+                                <li>Enter a title and content for your section</li>
+                                <li>Set priority level (1-4, where 1 is highest)</li>
+                                <li>Choose which contexts this applies to:
+                                    <ul>
+                                        <li><strong>All:</strong> Applies everywhere</li>
+                                        <li><strong>Desktop:</strong> Claude Desktop only</li>
+                                        <li><strong>Code:</strong> Claude Code only</li>
+                                        <li><strong>Web:</strong> Web interface only</li>
+                                    </ul>
+                                </li>
+                                <li>Toggle enabled/disabled</li>
+                                <li>Changes auto-save after 2 seconds</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <h4>Using Templates</h4>
+                    <p>Pre-built templates help you get started quickly:</p>
+                    <ul>
+                        <li><strong>Critical Rules:</strong> Binary on/off rules Claude must follow</li>
+                        <li><strong>Decision Tree:</strong> Logic for tool selection and workflows</li>
+                        <li><strong>Tool Priority:</strong> Which MCPs to use when</li>
+                        <li><strong>Anti-Patterns:</strong> What NOT to do</li>
+                        <li><strong>Context-Specific:</strong> Environment-specific behaviors</li>
+                        <li><strong>90/10 Prevention:</strong> Focus on boundaries over instructions</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Click any template to insert it into your current section. You can then customize it to your needs.
+                    </div>
+                </section>
+
+                <!-- Skills Library -->
+                <section id="skills-library" class="guide-section mb-5">
+                    <h2><i class="fas fa-toolbox"></i> Skills Library</h2>
+                    <p>Browse and search all 50+ MCP tools available across your environments.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #00b894;">
+                        <div class="card-body">
+                            <h5>Features</h5>
+                            <ul>
+                                <li><strong>Search:</strong> Find skills by name, description, or specific tools</li>
+                                <li><strong>Category Filters:</strong> File Management, Planning, Version Control, etc.</li>
+                                <li><strong>Priority Filters:</strong> Critical, High, Medium, Low</li>
+                                <li><strong>Favorites:</strong> Mark frequently-used skills with the star icon</li>
+                                <li><strong>Detail View:</strong> Click any skill card to see full capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Understanding Skill Cards</h4>
+                    <p>Each skill card shows:</p>
+                    <ul>
+                        <li><strong>Colored border:</strong> Indicates priority level</li>
+                        <li><strong>Availability badges:</strong> Desktop, Code, Web</li>
+                        <li><strong>Category badge:</strong> Type of functionality</li>
+                        <li><strong>Tool count:</strong> Number of functions available</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Use "Show Favorites" to quickly access your most-used skills.
+                    </div>
+                </section>
+
+                <!-- Agents Manager -->
+                <section id="agents-manager" class="guide-section mb-5">
+                    <h2><i class="fas fa-users-cog"></i> Agents & Subagents Manager</h2>
+                    <p>Understand Claude Code's Task tool agents and when to use them.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #fdcb6e;">
+                        <div class="card-body">
+                            <h5>Available Agents</h5>
+                            <ul>
+                                <li><strong>General-Purpose:</strong> Complex multi-step tasks with full tool access</li>
+                                <li><strong>Explore:</strong> Codebase exploration with thoroughness levels (quick/medium/very thorough)</li>
+                                <li><strong>Plan:</strong> Structured planning mode for implementation</li>
+                                <li><strong>Statusline-Setup:</strong> Specific status line configuration</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Decision Tree</h4>
+                    <p>The page includes a decision tree to help you choose:</p>
+                    <ul>
+                        <li><strong>Open-ended exploration:</strong> Use Explore Agent</li>
+                        <li><strong>Planning implementation:</strong> Use Plan Agent</li>
+                        <li><strong>Complex multi-step:</strong> Use General-Purpose Agent</li>
+                        <li><strong>Simple operations:</strong> Use direct tools</li>
+                        <li><strong>Multiple independent tasks:</strong> Use Parallel Agents</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Note:</strong> Click any agent card to see detailed usage examples and best practices.
+                    </div>
+                </section>
+
+                <!-- MCP Configuration Viewer -->
+                <section id="mcp-viewer" class="guide-section mb-5">
+                    <h2><i class="fas fa-plug"></i> MCP Configuration Viewer</h2>
+                    <p>View MCP server configurations and installation instructions.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #0984e3;">
+                        <div class="card-body">
+                            <h5>What You'll Find</h5>
+                            <ul>
+                                <li><strong>Server Cards:</strong> All 7 MCP servers with status indicators</li>
+                                <li><strong>Environment Matrix:</strong> Which MCPs work in Desktop/Code/Web</li>
+                                <li><strong>Configuration Examples:</strong> Copy-paste ready JSON configs</li>
+                                <li><strong>Installation Commands:</strong> NPM install instructions</li>
+                                <li><strong>Capabilities List:</strong> What each MCP can do</li>
+                                <li><strong>Documentation Links:</strong> Official docs for each server</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Using the Information</h4>
+                    <p>Click any MCP card to see:</p>
+                    <ul>
+                        <li>Full configuration example with environment variables</li>
+                        <li>Installation command</li>
+                        <li>Complete capabilities list</li>
+                        <li>Usage notes and tips</li>
+                    </ul>
+                </section>
+
+                <!-- Project Templates -->
+                <section id="templates" class="guide-section mb-5">
+                    <h2><i class="fas fa-folder-tree"></i> Project Templates</h2>
+                    <p>Quick-start new projects with proven structures and boilerplate code.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #d63031;">
+                        <div class="card-body">
+                            <h5>Built-in Templates</h5>
+                            <ul>
+                                <li><strong>HTML Project:</strong> Bootstrap 5 + American Palette flat design
+                                    <ul>
+                                        <li>index.html with CDN links</li>
+                                        <li>custom.css with color variables</li>
+                                        <li>main.js starter</li>
+                                        <li>README with setup instructions</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Python Project:</strong> Standard Python structure
+                                    <ul>
+                                        <li>src/ directory with main.py</li>
+                                        <li>tests/ with pytest setup</li>
+                                        <li>requirements.txt</li>
+                                        <li>.gitignore for Python</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Embedded LVGL:</strong> For RP2350/ESP32-S3
+                                    <ul>
+                                        <li>PlatformIO configuration</li>
+                                        <li>LVGL initialization code</li>
+                                        <li>Display configuration</li>
+                                        <li>Pin definitions header</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Using Templates</h4>
+                    <ol>
+                        <li>Click any template card to view details</li>
+                        <li>Review the file structure and contents</li>
+                        <li>Click "Export Template" to download as markdown</li>
+                        <li>Copy the code snippets to your new project</li>
+                    </ol>
+                    
+                    <div class="tip-box">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Template usage is tracked automatically. Your most-used templates appear in statistics.
+                    </div>
+                </section>
+
+                <!-- Documentation Archive -->
+                <section id="archive" class="guide-section mb-5">
+                    <h2><i class="fas fa-archive"></i> Documentation Archive</h2>
+                    <p>Track configuration history and restore previous versions.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #0984e3;">
+                        <div class="card-body">
+                            <h5>Snapshot System</h5>
+                            <ul>
+                                <li><strong>Create Snapshot:</strong> Saves current configuration with timestamp</li>
+                                <li><strong>View History:</strong> Browse all previous snapshots</li>
+                                <li><strong>Download:</strong> Export any snapshot as JSON</li>
+                                <li><strong>Restore:</strong> Roll back to any previous configuration</li>
+                                <li><strong>Delete:</strong> Remove old snapshots to save space</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Best Practices</h4>
+                    <ul>
+                        <li>Create a snapshot before major changes</li>
+                        <li>Add descriptive notes when creating snapshots</li>
+                        <li>System keeps last 20 snapshots automatically</li>
+                        <li>Download important configurations as backup files</li>
+                        <li>Restoring creates a new snapshot of current config first</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <strong><i class="fas fa-exclamation-triangle"></i> Warning:</strong> Snapshots are stored in browser localStorage. Clear browser data will delete snapshots. Export important configs as JSON files for long-term backup.
+                    </div>
+                </section>
+
+                <!-- Design System -->
+                <section id="design-system" class="guide-section mb-5">
+                    <h2><i class="fas fa-palette"></i> Design System</h2>
+                    <p>Manage the American Palette color scheme and design rules.</p>
+                    
+                    <div class="feature-card card" style="border-left-color: #00b894;">
+                        <div class="card-body">
+                            <h5>American Palette Colors</h5>
+                            <p><strong>Primary Colors:</strong></p>
+                            <ul>
+                                <li><span style="color: #2d3436;">■</span> Dracula Orchid (#2d3436) - Headers, primary text, dark backgrounds</li>
+                                <li><span style="color: #dfe6e9;">■</span> City Lights (#dfe6e9) - Light backgrounds, secondary text</li>
+                                <li><span style="color: #0984e3;">■</span> Electron Blue (#0984e3) - Links, primary actions, interactive elements</li>
+                                <li><span style="color: #d63031;">■</span> Chi-Gong (#d63031) - Alerts, warnings, danger actions</li>
+                            </ul>
+                            <p><strong>Secondary Colors:</strong></p>
+                            <ul>
+                                <li><span style="color: #00b894;">■</span> Mint Leaf (#00b894) - Success states, positive feedback</li>
+                                <li><span style="color: #fdcb6e;">■</span> Bright Yarrow (#fdcb6e) - Highlights, accents, warnings</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>Design Rules</h4>
+                    <ul>
+                        <li><strong>Flat Design Only:</strong> No gradients allowed</li>
+                        <li><strong>Framework:</strong> Bootstrap 5.3+</li>
+                        <li><strong>Icons:</strong> Font Awesome 6</li>
+                        <li><strong>Responsive:</strong> Mobile-first approach</li>
+                        <li><strong>Consistency:</strong> Use color variables from custom.css</li>
+                    </ul>
+                </section>
+
+                <!-- Tips & Best Practices -->
+                <section id="tips" class="guide-section mb-5">
+                    <h2><i class="fas fa-star"></i> Tips & Best Practices</h2>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5><i class="fas fa-save"></i> Data Management</h5>
+                            <ul>
+                                <li>Export your configuration regularly (Dashboard → Export Config)</li>
+                                <li>Create snapshots before major changes (Documentation Archive)</li>
+                                <li>Store backup JSON files in a safe location</li>
+                                <li>localStorage data persists but can be cleared by browser</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5><i class="fas fa-search"></i> Finding Information</h5>
+                            <ul>
+                                <li>Use Skills Library search for quick tool lookups</li>
+                                <li>Bookmark frequently-used skills with favorites</li>
+                                <li>Check Agents Manager before starting complex tasks</li>
+                                <li>Reference MCP Viewer for configuration examples</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5><i class="fas fa-file-code"></i> CLAUDE.md Best Practices</h5>
+                            <ul>
+                                <li>Keep critical rules concise and binary (do/don't)</li>
+                                <li>Use decision trees for complex logic</li>
+                                <li>Set appropriate context (all/desktop/code/web)</li>
+                                <li>Enable/disable sections instead of deleting them</li>
+                                <li>Use templates as starting points, then customize</li>
+                                <li>Review character count - too long may reduce effectiveness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5><i class="fas fa-project-diagram"></i> Workflow Optimization</h5>
+                            <ul>
+                                <li><strong>Daily Use:</strong> Skills Library → find tools → check examples</li>
+                                <li><strong>Starting Projects:</strong> Templates → export → customize</li>
+                                <li><strong>Planning Work:</strong> Agents Manager → review agents → choose approach</li>
+                                <li><strong>Configuring MCPs:</strong> MCP Viewer → copy config → install</li>
+                                <li><strong>Maintaining:</strong> Archive → create snapshots → export backups</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="guide-section mb-5">
+                    <h2><i class="fas fa-wrench"></i> Troubleshooting</h2>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>Configuration Not Saving</h5>
+                            <p><strong>Symptoms:</strong> Changes don't persist after refreshing</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Check browser console for JavaScript errors (F12)</li>
+                                <li>Verify localStorage is enabled in browser settings</li>
+                                <li>Try a different browser to isolate the issue</li>
+                                <li>Check available storage space</li>
+                                <li>Export and import configuration to reset</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>Missing Features or Blank Pages</h5>
+                            <p><strong>Symptoms:</strong> Pages don't load or features missing</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Hard refresh the page (Ctrl+Shift+R or Cmd+Shift+R)</li>
+                                <li>Clear browser cache and reload</li>
+                                <li>Check that all files are in correct directories</li>
+                                <li>Verify JavaScript files loaded (check Network tab in DevTools)</li>
+                                <li>Ensure Bootstrap and Font Awesome CDNs are accessible</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>Lost Configuration Data</h5>
+                            <p><strong>Symptoms:</strong> All data disappeared</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Check if you're in private/incognito mode (data won't persist)</li>
+                                <li>Look for exported JSON backups</li>
+                                <li>Check browser's localStorage for data</li>
+                                <li>Import from a previous backup if available</li>
+                                <li><strong>Prevention:</strong> Regular exports to JSON files</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>Search Not Working</h5>
+                            <p><strong>Symptoms:</strong> Skills Library search returns no results</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ul>
+                                <li>Clear search box and try again</li>
+                                <li>Remove all filters (Category: All, Priority: All)</li>
+                                <li>Toggle "Show Favorites" off</li>
+                                <li>Refresh the page</li>
+                                <li>Check browser console for errors</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <strong><i class="fas fa-info-circle"></i> Still Having Issues?</strong>
+                        <p class="mb-0">This is a local application with no external dependencies. All issues are typically browser-related. Try a different browser or export your data and reimport it to reset the application state.</p>
+                    </div>
+                </section>
+
+                <hr>
+                
+                <div class="text-center text-muted mb-4">
+                    <p><strong>Claude Commander</strong> v1.0.0</p>
+                    <p>Built with Bootstrap 5, Font Awesome 6, and American Palette design</p>
+                    <p>All data stored locally in your browser</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Smooth scrolling and TOC highlighting -->
+    <script>
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Highlight active section in TOC on scroll
+        window.addEventListener('scroll', function() {
+            let current = '';
+            document.querySelectorAll('.guide-section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.toc-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

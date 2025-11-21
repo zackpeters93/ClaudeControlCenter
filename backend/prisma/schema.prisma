@@ -1,0 +1,174 @@
+// Prisma Schema for Claude Control Center
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Claude Skills (Prompt Templates) table
+model Skill {
+  id             String   @id @default(uuid())
+  name           String
+  slug           String   @unique // URL-friendly name (e.g., "web-research")
+  description    String   @db.Text
+  content        String   @db.Text // Full markdown content
+  category       String   // 'research', 'coding', 'writing', 'analysis', etc.
+  tags           Json     // Array of tag strings
+  source         String   @default("manual") // 'manual', 'anthropic', 'imported', 'community'
+  sourceUrl      String?  // GitHub URL if imported
+  whenToUse      String?  @db.Text // When to apply this skill
+  icon           String   @default("fa-file-alt")
+  color          String   @default("#0984e3")
+  isFavorite     Boolean  @default(false)
+  usageCount     Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([category])
+  @@index([source])
+  @@index([slug])
+  @@map("skills")
+}
+
+// Agents table
+model Agent {
+  id                 String   @id @default(uuid())
+  name               String
+  type               String   // 'general-purpose', 'explore', 'plan', 'statusline-setup', 'workflow-pattern'
+  category           String   @default("claude-code") // 'claude-code', 'workflow-pattern', 'custom'
+  description        String   @db.Text
+  longDescription    String?  @db.Text
+  icon               String
+  color              String
+  tools              Json?    // Array of tool strings available to this agent
+  parallelCapable    Boolean  @default(false)
+  thoroughnessLevels Json?    // Object with level descriptions for Explore/Plan agents
+  whenToUse          Json     // Array of use case strings
+  whenNotToUse       Json?    // Array of when NOT to use
+  examplePrompts     Json     // Array of {title, prompt} objects
+  bestPractices      Json?    // Array of best practice strings
+  source             String   @default("manual") // 'manual', 'anthropic', 'custom'
+  usageCount         Int      @default(0)
+  isFavorite         Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([type])
+  @@index([category])
+  @@index([source])
+  @@map("agents")
+}
+
+// MCP Servers table
+model Mcp {
+  id             String   @id @default(uuid())
+  name           String
+  category       String   // 'file-management', 'version-control', 'web-operations', etc.
+  description    String   @db.Text
+  icon           String   @default("fa-plug")
+  color          String   @default("#0984e3")
+  availability   Json     // Array: ['desktop', 'code', 'web']
+  configuration  Json     // Configuration object for claude_desktop_config.json
+  configExample  String   @db.Text // Example configuration
+  capabilities   Json     // Array of capability/tool objects with {name, description}
+  documentation  String?  // Documentation URL
+  githubUrl      String?  // GitHub repository URL
+  source         String   @default("manual") // 'manual', 'anthropic', 'community', 'github'
+  status         String   @default("active") // 'active', 'inactive', 'testing'
+  toolCount      Int      @default(0)
+  isFavorite     Boolean  @default(false)
+  usageCount     Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([category])
+  @@index([status])
+  @@index([source])
+  @@map("mcps")
+}
+
+// Templates table
+model Template {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  category    String   // 'web', 'python', 'mobile', 'embedded', 'scripting', etc.
+  structure   String   @db.Text // File structure as text
+  files       Json     // Array of file objects with name and content
+  language    String
+  framework   String?
+  tags        Json     // Array of tag strings
+  source      String   @default("manual")
+  usageCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([language])
+  @@index([source])
+  @@map("templates")
+}
+
+// Claude Configurations
+model Configuration {
+  id         String   @id @default(uuid())
+  type       String   // 'claude-md', 'design-system'
+  data       Json     // Configuration data
+  version    String   @default("1.0.0")
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  snapshots  Snapshot[]
+
+  @@index([type])
+  @@index([isActive])
+  @@map("configurations")
+}
+
+// Configuration Snapshots
+model Snapshot {
+  id              String        @id @default(uuid())
+  configurationId String
+  configuration   Configuration @relation(fields: [configurationId], references: [id], onDelete: Cascade)
+  data            Json
+  description     String?
+  createdAt       DateTime      @default(now())
+
+  @@index([configurationId])
+  @@index([createdAt])
+  @@map("snapshots")
+}
+
+// Import History
+model ImportHistory {
+  id         String   @id @default(uuid())
+  type       String   // 'skill', 'agent', 'mcp', 'template'
+  source     String   // 'json', 'url', 'anthropic', 'github', 'ai'
+  sourceUrl  String?
+  itemCount  Int      @default(1)
+  status     String   // 'success', 'partial', 'failed'
+  errors     Json?    // Array of error messages
+  details    Json?    // Additional details about the import
+  createdAt  DateTime @default(now())
+
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+  @@map("import_history")
+}
+
+// Standalone Archives (Documentation Archive)
+model Archive {
+  id          String   @id @default(uuid())
+  version     String   @default("1.0.0")
+  data        Json     // Full configuration snapshot
+  note        String?  // Optional note/description
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("archives")
+}

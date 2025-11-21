@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <title>MCP Configuration - Claude Commander</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    
+    <style>
+        .mcp-card {
+            height: 100%;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .mcp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .status-active {
+            background-color: #00b894;
+        }
+        
+        .status-inactive {
+            background-color: #dfe6e9;
+        }
+        
+        .config-code {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        
+        .env-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            margin-right: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fas fa-robot"></i> Claude</h2>
+            <p>Commander</p>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="../index.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="claude-builder.html"><i class="fas fa-file-code"></i> <span>CLAUDE.md Builder</span></a></li>
+            <li><a href="design-system.html"><i class="fas fa-palette"></i> <span>Design System</span></a></li>
+            <li><a href="skills-library.html"><i class="fas fa-wand-magic-sparkles"></i> <span>Skills Library</span></a></li>
+            <li><a href="mcp-library.html"><i class="fas fa-plug"></i> <span>MCP Library</span></a></li>
+            <li><a href="agents-manager.html"><i class="fas fa-users-cog"></i> <span>Agents & Subagents</span></a></li>
+            <li><a href="mcps-viewer.html" class="active"><i class="fas fa-plug"></i> <span>MCP Configuration</span></a></li>
+            <li><a href="project-templates.html"><i class="fas fa-folder-tree"></i> <span>Project Templates</span></a></li>
+            <li><a href="documentation-archive.html"><i class="fas fa-archive"></i> <span>Documentation Archive</span></a></li>
+            <li><a href="../user-guide.html"><i class="fas fa-book"></i> <span>User Guide</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1><i class="fas fa-plug"></i> MCP Configuration Viewer</h1>
+                <p class="lead">View and understand your Model Context Protocol setup</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3 id="totalServers">7</h3>
+                    <p><i class="fas fa-plug"></i> MCP Servers</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card success">
+                    <h3 id="activeServers">7</h3>
+                    <p><i class="fas fa-check-circle"></i> Active</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card warning">
+                    <h3 id="totalTools">50+</h3>
+                    <p><i class="fas fa-tools"></i> Total Tools</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card" style="border-left-color: #0984e3;">
+                    <h3 id="environments">3</h3>
+                    <p><i class="fas fa-desktop"></i> Environments</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Environment Comparison -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-th"></i> Environment Availability Matrix</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>MCP Server</th>
+                                        <th class="text-center">Claude Desktop</th>
+                                        <th class="text-center">Claude Code</th>
+                                        <th class="text-center">Claude Web</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="environmentMatrix">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MCP Servers Grid -->
+        <div class="row" id="mcpsGrid">
+            <!-- MCPs will be populated here -->
+        </div>
+    </main>
+
+    <!-- MCP Detail Modal -->
+    <div class="modal fade" id="mcpDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #2d3436; color: white;">
+                    <h5 class="modal-title" id="modalMcpName"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalMcpContent">
+                    <!-- Content populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+    
+    <!-- MCPs Viewer JS -->
+    <script src="../assets/js/mcps-viewer.js"></script>
+</body>
+</html>

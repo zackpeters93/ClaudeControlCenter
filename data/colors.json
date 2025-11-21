@@ -1,0 +1,50 @@
+{
+  "palettes": {
+    "american": {
+      "name": "American Palette",
+      "source": "https://flatuicolors.com/palette/us",
+      "primary": [
+        {
+          "name": "Dracula Orchid",
+          "hex": "#2d3436",
+          "rgb": "45, 52, 54",
+          "usage": "Primary dark - backgrounds, headers, sidebar"
+        },
+        {
+          "name": "City Lights",
+          "hex": "#dfe6e9",
+          "rgb": "223, 230, 233",
+          "usage": "Primary light - main backgrounds, cards"
+        },
+        {
+          "name": "Electron Blue",
+          "hex": "#0984e3",
+          "rgb": "9, 132, 227",
+          "usage": "Accent color - links, buttons, active states"
+        },
+        {
+          "name": "Chi-Gong",
+          "hex": "#d63031",
+          "rgb": "214, 48, 49",
+          "usage": "Alerts, errors, danger actions"
+        }
+      ],
+      "secondary": [
+        {
+          "name": "Mint Leaf",
+          "hex": "#00b894",
+          "rgb": "0, 184, 148",
+          "usage": "Success states, positive actions"
+        },
+        {
+          "name": "Bright Yarrow",
+          "hex": "#fdcb6e",
+          "rgb": "253, 203, 110",
+          "usage": "Warnings, attention needed"
+        }
+      ]
+    }
+  },
+  "active": "american",
+  "customPalettes": []
+}

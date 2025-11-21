@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>Claude Control Center - Project Documentation</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fas fa-robot"></i> Claude CCC</h2>
+            <p>Control Center</p>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="index.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="#overview" class="active"><i class="fas fa-book"></i> <span>Project Overview</span></a></li>
+            <li><a href="#architecture"><i class="fas fa-sitemap"></i> <span>Architecture</span></a></li>
+            <li><a href="#features"><i class="fas fa-star"></i> <span>Features</span></a></li>
+            <li><a href="#implementation"><i class="fas fa-code"></i> <span>Implementation</span></a></li>
+            <li><a href="#research"><i class="fas fa-flask"></i> <span>Research Summary</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1><i class="fas fa-file-alt"></i> Claude Control Center: Project Documentation</h1>
+                <p class="lead">Building superpowers for Claude through comprehensive configuration management</p>
+                <div class="text-muted">
+                    <i class="fas fa-calendar-day"></i> Created: November 5, 2025 |
+                    <i class="fas fa-user"></i> Developer: Zack |
+                    <i class="fas fa-code-branch"></i> Version: 1.0.0
+                </div>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview" class="mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-info-circle"></i> Project Overview</h3>
+                </div>
+                <div class="card-body">
+                    <h4>The Vision</h4>
+                    <p>The Claude Control Center (CCC) is a comprehensive web-based configuration management system designed to give Claude "superpowers" by providing a centralized interface for managing all aspects of Claude's behavior, preferences, and capabilities across different modalities (Claude Desktop, Claude Code, Web Interface).</p>
+                    
+                    <h4>The Problem We're Solving</h4>
+                    <p>Previously, configuring Claude required:</p>
+                    <ul>
+                        <li>Manual editing of configuration files</li>
+                        <li>Remembering numerous preferences and rules</li>
+                        <li>Inconsistent behavior across different contexts</li>
+                        <li>No easy way to manage skills, agents, and templates</li>
+                        <li>Limited visibility into available MCPs and their capabilities</li>
+                        <li>No version control for configuration changes</li>
+                    </ul>
+                    
+                    <h4>The Solution</h4>
+                    <p>A beautiful, intuitive web application that provides:</p>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="stat-card">
+                                <h5><i class="fas fa-file-code"></i> CLAUDE.md Builder</h5>
+                                <p>Section-based editor for creating comprehensive configuration files</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stat-card success">
+                                <h5><i class="fas fa-palette"></i> Design System Manager</h5>
+                                <p>Visual control over colors, fonts, and UI preferences</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stat-card warning">
+                                <h5><i class="fas fa-plug"></i> MCP Library</h5>
+                                <p>Browse, add, and manage all MCP servers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="stat-card danger">
+                                <h5><i class="fas fa-users-cog"></i> Agents System</h5>
+                                <p>Define specialized Claude personas for different tasks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Section -->
+        <section id="architecture" class="mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-sitemap"></i> System Architecture</h3>
+                </div>
+                <div class="card-body">
+                    <h4>Technology Stack</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5><i class="fab fa-html5"></i> Frontend</h5>
+                            <ul>
+                                <li>Pure HTML/CSS/JavaScript</li>
+                                <li>Bootstrap 5.3+</li>
+                                <li>Font Awesome 6</li>
+                                <li>Chart.js for visualizations</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5><i class="fas fa-database"></i> Data Storage</h5>
+                            <ul>
+                                <li>LocalStorage for persistence</li>
+                                <li>JSON export/import</li>
+                                <li>GitHub sync capability</li>
+                                <li>Automatic archiving</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5><i class="fas fa-plug"></i> Integration</h5>
+                            <ul>
+                                <li>Desktop Commander MCP</li>
+                                <li>Sequential-Thinking MCP</li>
+                                <li>Context7 MCP</li>
+                                <li>27+ other MCPs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mt-4">Directory Structure</h4>
+                    <pre class="bg-light p-3 rounded"><code>ClaudeControlCenter/
+├── index.html                    # Main dashboard
+├── assets/
+│   ├── css/
+│   │   └── custom.css           # American Palette styling
+│   ├── js/
+│   │   ├── main.js              # Core functionality
+│   │   └── config-manager.js    # Configuration management
+│   └── data/
+│       ├── claude-config.json   # Main configuration
+│       ├── skills.json          # Skills library
+│       ├── agents.json          # Agent definitions
+│       ├── mcps.json            # MCP registry
+│       └── design-system.json   # Design preferences
+├── pages/
+│   ├── claude-builder.html      # CLAUDE.md editor
+│   ├── design-system.html       # Design manager
+│   ├── skills-manager.html      # Skills library
+│   ├── agents-manager.html      # Agents system
+│   ├── mcps-viewer.html         # MCP configuration
+│   ├── project-templates.html   # Templates
+│   └── documentation-archive.html # Version history
+└── archive/
+    └── [timestamped archives]   # Historical versions</code></pre>
+                </div>
+            </div>
+        </section>
+        <!-- Features Section -->
+        <section id="features" class="mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-star"></i> Core Features</h3>
+                </div>
+                <div class="card-body">
+                    <h4>1. CLAUDE.md Builder</h4>
+                    <p>Comprehensive configuration file creation system:</p>
+                    <ul>
+                        <li><strong>Section-Based Editing:</strong> Organize configuration into logical sections</li>
+                        <li><strong>Template Library:</strong> Pre-built sections based on Claude 4 system prompt research</li>
+                        <li><strong>Context Awareness:</strong> Different configurations for Desktop/Code/Web</li>
+                        <li><strong>Validation:</strong> Real-time checking for errors and best practices</li>
+                        <li><strong>Preview:</strong> Live preview of how configuration looks</li>
+                        <li><strong>Export:</strong> Generate final CLAUDE.md file</li>
+                    </ul>
+                    
+                    <h4>2. Design System Manager</h4>
+                    <p>Visual control over all design elements:</p>
+                    <ul>
+                        <li><strong>American Palette:</strong> Pre-configured with Flat UI Colors 2</li>
+                        <li><strong>Custom Palettes:</strong> Create and save custom color schemes</li>
+                        <li><strong>Typography Control:</strong> Font selection and preview</li>
+                        <li><strong>Component Styling:</strong> Bootstrap component customization</li>
+                        <li><strong>Chart Themes:</strong> Chart.js color coordination</li>
+                        <li><strong>CSS Export:</strong> Generate custom stylesheets</li>
+                    </ul>
+                    
+                    <h4>3. Skills Library</h4>
+                    <p>Comprehensive skills management:</p>
+                    <ul>
+                        <li><strong>Browse Skills:</strong> View all available skills with descriptions</li>
+                        <li><strong>Add Custom Skills:</strong> Define new skills with structured forms</li>
+                        <li><strong>Categorization:</strong> Organize by type (documents, data, web, etc.)</li>
+                        <li><strong>Search & Filter:</strong> Quickly find specific skills</li>
+                        <li><strong>Usage Tracking:</strong> See which skills are used most often</li>
+                        <li><strong>Integration:</strong> Automatic Context7 documentation fetch</li>
+                    </ul>
+                    
+                    <h4>4. Agents & Subagents</h4>
+                    <p>Define specialized Claude personas:</p>
+                    <ul>
+                        <li><strong>Project Architect:</strong> For new project initialization</li>
+                        <li><strong>Code Developer:</strong> Optimized for coding tasks</li>
+                        <li><strong>Documentation Writer:</strong> HTML documentation generation</li>
+                        <li><strong>Data Analyst:</strong> Python, pandas, statistical analysis</li>
+                        <li><strong>Research Assistant:</strong> Web search and synthesis</li>
+                        <li><strong>Custom Agents:</strong> Define your own specialized personas</li>
+                    </ul>
+                    
+                    <h4>5. MCP Configuration Viewer</h4>
+                    <p>Complete visibility into available tools:</p>
+                    <ul>
+                        <li><strong>MCP Registry:</strong> All 27+ MCPs cataloged</li>
+                        <li><strong>Tool Descriptions:</strong> What each MCP does</li>
+                        <li><strong>Availability Matrix:</strong> Which MCPs work in which contexts</li>
+                        <li><strong>Usage Statistics:</strong> Track MCP usage patterns</li>
+                        <li><strong>Documentation Links:</strong> Quick access to MCP docs</li>
+                        <li><strong>Sync Status:</strong> Cross-machine synchronization tracking</li>
+                    </ul>
+                    
+                    <h4>6. Project Templates</h4>
+                    <p>Reusable project structures:</p>
+                    <ul>
+                        <li><strong>Web App Template:</strong> Bootstrap + American Palette</li>
+                        <li><strong>Python Analysis Template:</strong> Data science setup</li>
+                        <li><strong>Embedded Development:</strong> RP2350/ESP32-S3 structure</li>
+                        <li><strong>Educational Course:</strong> Multi-domain curriculum</li>
+                        <li><strong>Custom Templates:</strong> Save your own patterns</li>
+                        <li><strong>One-Click Deploy:</strong> Instant project creation</li>
+                    </ul>
+                    
+                    <h4>7. Documentation Archive</h4>
+                    <p>Complete version history:</p>
+                    <ul>
+                        <li><strong>Automatic Archiving:</strong> Timestamp-based snapshots</li>
+                        <li><strong>Visual Timeline:</strong> Chronological view of changes</li>
+                        <li><strong>Diff Viewer:</strong> Side-by-side comparison</li>
+                        <li><strong>Restore Capability:</strong> Roll back to previous versions</li>
+                        <li><strong>Search Archives:</strong> Find specific historical content</li>
+                        <li><strong>Export Archive:</strong> Complete history as ZIP</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Section -->
+        <section id="implementation" class="mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-code"></i> Implementation Plan</h3>
+                </div>
+                <div class="card-body">
+                    <h4>Phase 1: Foundation (Current)</h4>
+                    <div class="alert" style="background-color: #00b894; color: white;">
+                        <i class="fas fa-check-circle"></i> <strong>Status: COMPLETE</strong>
+                    </div>
+                    <ul>
+                        <li>✅ Project structure created</li>
+                        <li>✅ Custom CSS with American Palette</li>
+                        <li>✅ Main dashboard built</li>
+                        <li>✅ Data persistence layer (main.js)</li>
+                        <li>✅ Configuration management system</li>
+                        <li>✅ Initial documentation</li>
+                    </ul>
+                    
+                    <h4>Phase 2: Core Features (Next)</h4>
+                    <div class="alert" style="background-color: #fdcb6e; color: #2d3436;">
+                        <i class="fas fa-clock"></i> <strong>Status: PLANNED</strong>
+                    </div>
+                    <ul>
+                        <li>⏳ CLAUDE.md Builder interface</li>
+                        <li>⏳ Section-based editing system</li>
+                        <li>⏳ Design System Manager</li>
+                        <li>⏳ Color palette editor</li>
+                        <li>⏳ Skills Library viewer</li>
+                        <li>⏳ Skill add/edit functionality</li>
+                    </ul>
+                    
+                    <h4>Phase 3: Advanced Features</h4>
+                    <div class="alert" style="background-color: #0984e3; color: white;">
+                        <i class="fas fa-hourglass-half"></i> <strong>Status: QUEUED</strong>
+                    </div>
+                    <ul>
+                        <li>⏳ Agents/Subagents manager</li>
+                        <li>⏳ Agent definition forms</li>
+                        <li>⏳ MCP Configuration viewer</li>
+                        <li>⏳ Project Templates system</li>
+                        <li>⏳ Template instantiation</li>
+                        <li>⏳ GitHub integration for sync</li>
+                    </ul>
+                    
+                    <h4>Phase 4: Polish & Optimization</h4>
+                    <div class="alert" style="background-color: #dfe6e9; color: #2d3436;">
+                        <i class="fas fa-star"></i> <strong>Status: FUTURE</strong>
+                    </div>
+                    <ul>
+                        <li>⏳ Documentation Archive browser</li>
+                        <li>⏳ Diff viewer implementation</li>
+                        <li>⏳ Search functionality</li>
+                        <li>⏳ Performance optimization</li>
+                        <li>⏳ Mobile responsiveness</li>
+                        <li>⏳ Testing and refinement</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Summary Section -->
+        <section id="research" class="mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-flask"></i> Research Summary: Claude System Prompts</h3>
+                </div>
+                <div class="card-body">
+                    <h4>Key Findings from Claude 4 System Prompt Analysis</h4>
+                    
+                    <h5>1. The 90/10 Rule</h5>
+                    <p class="ms-3">Most effective prompts are <strong>90% prevention, 10% instruction</strong>. The Claude 4 system prompt focuses heavily on what NOT to do rather than just what to do.</p>
+                    
+                    <h5>2. Decision Trees for Ambiguity</h5>
+                    <p class="ms-3">Structured logic for handling uncertain queries:</p>
+                    <ul>
+                        <li><strong>Timeless info:</strong> Answer directly</li>
+                        <li><strong>Slow-changing:</strong> Answer + offer to verify</li>
+                        <li><strong>Live data:</strong> Search first</li>
+                    </ul>
+                    
+                    <h5>3. Binary Rules Over Fuzzy Language</h5>
+                    <p class="ms-3">Use hard on/off rules instead of subjective guidance. Rather than "be concise," use "responses must be under 500 words" or "NEVER use more than 3 bullet points."</p>
+                    
+                    <h5>4. Counter-Examples in Tool Use</h5>
+                    <p class="ms-3">Show both correct usage AND common failure modes. Teaching what not to do is as important as teaching what to do.</p>
+                    
+                    <h5>5. Critical Instruction Repetition</h5>
+                    <p class="ms-3">Important rules appear multiple times in long contexts to prevent drift.</p>
+                    
+                    <h5>6. Reflection Steps</h5>
+                    <p class="ms-3">Built-in self-checking mechanisms where Claude validates its own outputs.</p>
+                    
+                    <h5>7. Context-Specific Behavior</h5>
+                    <p class="ms-3">Different rules for different contexts (Desktop vs Code vs Web). The system must adapt to available tools.</p>
+                    
+                    <h4 class="mt-4">Sources Analyzed</h4>
+                    <ul>
+                        <li>Simon Willison's Claude 4 System Prompt Analysis</li>
+                        <li>Forte Labs: Guide to Claude 4 and ChatGPT 5 System Prompts</li>
+                        <li>Medium: 7 Prompting Strategies from Claude 4's System Prompt Leak</li>
+                        <li>Official Anthropic Documentation</li>
+                        <li>Community discussions on Reddit and Hacker News</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">Implementation in CCC</h4>
+                    <p>These research findings have been incorporated into:</p>
+                    <ul>
+                        <li>The default CLAUDE.md template structure</li>
+                        <li>Decision tree sections for tool selection</li>
+                        <li>Binary rule definitions in Critical Rules section</li>
+                        <li>Counter-example templates for common mistakes</li>
+                        <li>Context-aware configuration sections</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="mb-5">
+            <div class="card">
+                <div class="card-header" style="background-color: #d63031;">
+                    <h3 class="text-white"><i class="fas fa-rocket"></i> Next Steps</h3>
+                </div>
+                <div class="card-body">
+                    <h4>Immediate Tasks</h4>
+                    <ol>
+                        <li><strong>Build CLAUDE.md Builder Page:</strong> Create the interface for editing configuration sections</li>
+                        <li><strong>Populate Initial Content:</strong> Add all researched best practices into default sections</li>
+                        <li><strong>Test Dashboard:</strong> Verify all links and functionality work</li>
+                        <li><strong>Create Skills Data:</strong> Catalog all 27+ MCPs and available skills</li>
+                        <li><strong>Define Default Agents:</strong> Create the core agent personas</li>
+                    </ol>
+                    
+                    <h4>Success Criteria</h4>
+                    <ul>
+                        <li>✅ Can generate complete CLAUDE.md from web interface</li>
+                        <li>✅ Design system fully customizable through UI</li>
+                        <li>✅ All skills browsable and searchable</li>
+                        <li>✅ Agents can be created and assigned to tasks</li>
+                        <li>✅ Configuration exportable/importable</li>
+                        <li>✅ Version history accessible and browsable</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-muted mt-5 pb-4">
+            <p><strong>Claude Control Center</strong> | Version 1.0.0 | Created November 5, 2025</p>
+            <p>Built with <i class="fas fa-heart" style="color: #d63031;"></i> using Bootstrap 5, Font Awesome 6, and the American Palette</p>
+            <p class="mb-0">
+                <a href="index.html" class="me-3"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" onclick="exportConfiguration()"><i class="fas fa-download"></i> Export Config</a>
+            </p>
+        </footer>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

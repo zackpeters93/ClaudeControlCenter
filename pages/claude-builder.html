@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <title>CLAUDE.md Builder - Claude Commander</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    
+    <style>
+        .section-list {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .section-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: white;
+            border-left: 4px solid #0984e3;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .section-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section-item.active {
+            background-color: #e3f2fd;
+            border-left-color: #00b894;
+        }
+        
+        .section-item.priority-1 { border-left-color: #d63031; }
+        .section-item.priority-2 { border-left-color: #0984e3; }
+        .section-item.priority-3 { border-left-color: #fdcb6e; }
+        .section-item.priority-4 { border-left-color: #dfe6e9; }
+        
+        .section-item.disabled {
+            opacity: 0.5;
+            background-color: #f5f5f5;
+        }
+        
+        .editor-area {
+            min-height: 400px;
+        }
+        
+        .char-counter {
+            font-size: 0.875rem;
+            color: #00b894;
+        }
+        
+        .char-counter.warning {
+            color: #fdcb6e;
+        }
+        
+        .char-counter.danger {
+            color: #d63031;
+        }
+        
+        .template-card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fas fa-robot"></i> Claude</h2>
+            <p>Commander</p>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="../index.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="claude-builder.html" class="active"><i class="fas fa-file-code"></i> <span>CLAUDE.md Builder</span></a></li>
+            <li><a href="design-system.html"><i class="fas fa-palette"></i> <span>Design System</span></a></li>
+            <li><a href="skills-library.html"><i class="fas fa-wand-magic-sparkles"></i> <span>Skills Library</span></a></li>
+            <li><a href="mcp-library.html"><i class="fas fa-plug"></i> <span>MCP Library</span></a></li>
+            <li><a href="mcps-viewer.html"><i class="fas fa-plug"></i> <span>MCP Configuration</span></a></li><li><a href="agents-manager.html"><i class="fas fa-users-cog"></i> <span>Agents & Subagents</span></a></li>
+            
+            <li><a href="project-templates.html"><i class="fas fa-folder-tree"></i> <span>Project Templates</span></a></li>
+            <li><a href="documentation-archive.html"><i class="fas fa-archive"></i> <span>Documentation Archive</span></a></li>
+            <li><a href="../user-guide.html"><i class="fas fa-book"></i> <span>User Guide</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-8">
+                <h1><i class="fas fa-file-code"></i> CLAUDE.md Builder</h1>
+                <p class="lead">Build your comprehensive Claude configuration file</p>
+            </div>
+            <div class="col-4 text-end">
+                <button class="btn btn-success me-2" onclick="previewCLAUDEmd()">
+                    <i class="fas fa-eye"></i> Preview
+                </button>
+                <button class="btn btn-primary" onclick="exportCLAUDEmd()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3 id="sectionCount">0</h3>
+                    <p><i class="fas fa-list"></i> Total Sections</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card success">
+                    <h3 id="enabledCount">0</h3>
+                    <p><i class="fas fa-check-circle"></i> Enabled</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card warning">
+                    <h3 id="totalChars">0</h3>
+                    <p><i class="fas fa-font"></i> Total Characters</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card" id="lastSavedCard">
+                    <p class="mb-0"><i class="fas fa-save"></i> Last Saved</p>
+                    <small id="lastSaved">Never</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Builder Layout -->
+        <div class="row">
+            <!-- Left Column: Section List -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-list"></i> Sections</h5>
+                        <button class="btn btn-sm btn-primary" onclick="addNewSection()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="section-list" id="sectionList">
+                            <!-- Sections will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Middle Column: Editor -->
+            <div class="col-md-6">
+                <div class="card" id="editorCard">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-edit"></i> <span id="editorTitle">Select a section</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="editorContent">
+                            <div class="text-center text-muted py-5">
+                                <i class="fas fa-arrow-left fa-3x mb-3"></i>
+                                <p>Select a section from the list to start editing</p>
+                            </div>
+                        </div>
+                        <div id="editorForm" style="display: none;">
+                            <!-- Section Title -->
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Section Title</strong></label>
+                                <input type="text" class="form-control" id="sectionTitleInput" placeholder="Enter section title">
+                            </div>
+                            
+                            <!-- Context Selection -->
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Context</strong> <small class="text-muted">(Where this applies)</small></label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contextAll" value="all" onchange="handleContextChange()">
+                                        <label class="form-check-label" for="contextAll">All</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contextDesktop" value="desktop">
+                                        <label class="form-check-label" for="contextDesktop">Desktop</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contextCode" value="code">
+                                        <label class="form-check-label" for="contextCode">Code</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="contextWeb" value="web">
+                                        <label class="form-check-label" for="contextWeb">Web</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Priority Selection -->
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Priority</strong></label>
+                                <select class="form-select" id="prioritySelect">
+                                    <option value="1">Critical (Red)</option>
+                                    <option value="2">High (Blue)</option>
+                                    <option value="3">Medium (Yellow)</option>
+                                    <option value="4">Low (Gray)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Content Editor -->
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Content</strong></label>
+                                <textarea class="form-control editor-area" id="contentTextarea" rows="15" placeholder="Enter your configuration content here..."></textarea>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="char-counter" id="charCounter">0 characters</span>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="clearContent()">
+                                            <i class="fas fa-eraser"></i> Clear
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-success" onclick="saveCurrentSection()">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                                <button class="btn btn-danger" onclick="deleteCurrentSection()">
+                                    <i class="fas fa-trash"></i> Delete Section
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Templates & Properties -->
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-cog"></i> Properties</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="enabledSwitch" onchange="toggleSectionEnabled()">
+                            <label class="form-check-label" for="enabledSwitch">
+                                <strong>Section Enabled</strong>
+                            </label>
+                        </div>
+                        <hr>
+                        <div>
+                            <p class="mb-2"><strong>Priority Colors:</strong></p>
+                            <ul class="list-unstyled">
+                                <li><span style="color: #d63031;">■</span> Critical</li>
+                                <li><span style="color: #0984e3;">■</span> High</li>
+                                <li><span style="color: #fdcb6e;">■</span> Medium</li>
+                                <li><span style="color: #dfe6e9;">■</span> Low</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-layer-group"></i> Templates</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div id="templateList">
+                            <!-- Templates will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #2d3436; color: white;">
+                    <h5 class="modal-title"><i class="fas fa-eye"></i> CLAUDE.md Preview</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <pre class="bg-light p-3 rounded" style="max-height: 70vh; overflow-y: auto;"><code id="previewContent"></code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="exportCLAUDEmd()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+    
+    <!-- Builder JS -->
+    <script src="../assets/js/claude-builder.js"></script>
+</body>
+</html>

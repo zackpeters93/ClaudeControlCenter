@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <title>Design System Manager - Claude Commander</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    
+    <style>
+        .color-editor-card {
+            border-left: 5px solid;
+            transition: transform 0.2s;
+        }
+        
+        .color-editor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-swatch-large {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            border: 2px solid #2d3436;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .color-swatch-large:hover {
+            transform: scale(1.05);
+        }
+        
+        .color-picker-input {
+            width: 100%;
+            height: 50px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .preview-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            min-height: 600px;
+        }
+        
+        .component-showcase {
+            margin-bottom: 30px;
+        }
+
+        .favicon-option {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .favicon-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .favicon-option.selected {
+            border: 3px solid #0984e3 !important;
+            box-shadow: 0 0 10px rgba(9, 132, 227, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fas fa-robot"></i> Claude</h2>
+            <p>Commander</p>
+        </div>
+        
+        <ul class="sidebar-nav">
+            <li><a href="../index.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="claude-builder.html"><i class="fas fa-file-code"></i> <span>CLAUDE.md Builder</span></a></li>
+            <li><a href="design-system.html" class="active"><i class="fas fa-palette"></i> <span>Design System</span></a></li>
+            <li><a href="skills-library.html"><i class="fas fa-wand-magic-sparkles"></i> <span>Skills Library</span></a></li>
+            <li><a href="mcp-library.html"><i class="fas fa-plug"></i> <span>MCP Library</span></a></li>
+            <li><a href="mcps-viewer.html"><i class="fas fa-plug"></i> <span>MCP Configuration</span></a></li><li><a href="agents-manager.html"><i class="fas fa-users-cog"></i> <span>Agents & Subagents</span></a></li>
+            
+            <li><a href="project-templates.html"><i class="fas fa-folder-tree"></i> <span>Project Templates</span></a></li>
+            <li><a href="documentation-archive.html"><i class="fas fa-archive"></i> <span>Documentation Archive</span></a></li>
+            <li><a href="../user-guide.html"><i class="fas fa-book"></i> <span>User Guide</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-8">
+                <h1><i class="fas fa-palette"></i> Design System Manager</h1>
+                <p class="lead">Manage colors, typography, and design preferences</p>
+            </div>
+            <div class="col-4 text-end">
+                <button class="btn btn-success me-2" onclick="exportCSS()">
+                    <i class="fas fa-download"></i> Export CSS
+                </button>
+                <button class="btn btn-warning" onclick="resetToDefault()">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+        </div>
+
+        <!-- Design Rules Alert -->
+        <div class="alert" style="background-color: #d63031; color: white; border: none;">
+            <h5><i class="fas fa-exclamation-triangle"></i> Design Rule</h5>
+            <p class="mb-0"><strong>ABSOLUTELY NO GRADIENTS</strong> - Flat design only. Use solid colors from the palette.</p>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="row">
+            <!-- Left Column: Color Editor -->
+            <div class="col-md-5">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-paint-brush"></i> Color Palette Editor</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">Click on colors to edit. Changes update instantly in the preview.</p>
+                        
+                        <h6 class="mb-3"><strong>Primary Colors</strong></h6>
+                        
+                        <!-- Dracula Orchid -->
+                        <div class="card color-editor-card mb-3" id="card-draculaOrchid" style="border-left-color: #2d3436;">
+                            <div class="card-body">
+                                <h6>Dracula Orchid</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-draculaOrchid" style="background-color: #2d3436;" onclick="document.getElementById('picker-draculaOrchid').click()"></div>
+                                <input type="color" id="picker-draculaOrchid" class="color-picker-input" value="#2d3436" onchange="updateColor('draculaOrchid', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Headers, primary text, dark backgrounds</small><br>
+                                    <code id="hex-draculaOrchid">#2d3436</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- City Lights -->
+                        <div class="card color-editor-card mb-3" id="card-cityLights" style="border-left-color: #dfe6e9;">
+                            <div class="card-body">
+                                <h6>City Lights</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-cityLights" style="background-color: #dfe6e9;" onclick="document.getElementById('picker-cityLights').click()"></div>
+                                <input type="color" id="picker-cityLights" class="color-picker-input" value="#dfe6e9" onchange="updateColor('cityLights', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Light backgrounds, secondary text</small><br>
+                                    <code id="hex-cityLights">#dfe6e9</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Electron Blue -->
+                        <div class="card color-editor-card mb-3" id="card-electronBlue" style="border-left-color: #0984e3;">
+                            <div class="card-body">
+                                <h6>Electron Blue</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-electronBlue" style="background-color: #0984e3;" onclick="document.getElementById('picker-electronBlue').click()"></div>
+                                <input type="color" id="picker-electronBlue" class="color-picker-input" value="#0984e3" onchange="updateColor('electronBlue', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Links, primary actions, buttons</small><br>
+                                    <code id="hex-electronBlue">#0984e3</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chi-Gong -->
+                        <div class="card color-editor-card mb-3" id="card-chiGong" style="border-left-color: #d63031;">
+                            <div class="card-body">
+                                <h6>Chi-Gong</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-chiGong" style="background-color: #d63031;" onclick="document.getElementById('picker-chiGong').click()"></div>
+                                <input type="color" id="picker-chiGong" class="color-picker-input" value="#d63031" onchange="updateColor('chiGong', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Alerts, warnings, danger actions</small><br>
+                                    <code id="hex-chiGong">#d63031</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3 mt-4"><strong>Secondary Colors</strong></h6>
+
+                        <!-- Mint Leaf -->
+                        <div class="card color-editor-card mb-3" id="card-mintLeaf" style="border-left-color: #00b894;">
+                            <div class="card-body">
+                                <h6>Mint Leaf</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-mintLeaf" style="background-color: #00b894;" onclick="document.getElementById('picker-mintLeaf').click()"></div>
+                                <input type="color" id="picker-mintLeaf" class="color-picker-input" value="#00b894" onchange="updateColor('mintLeaf', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Success states, positive feedback</small><br>
+                                    <code id="hex-mintLeaf">#00b894</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bright Yarrow -->
+                        <div class="card color-editor-card mb-3" id="card-brightYarrow" style="border-left-color: #fdcb6e;">
+                            <div class="card-body">
+                                <h6>Bright Yarrow</h6>
+                                <div class="color-swatch-large mb-2" id="swatch-brightYarrow" style="background-color: #fdcb6e;" onclick="document.getElementById('picker-brightYarrow').click()"></div>
+                                <input type="color" id="picker-brightYarrow" class="color-picker-input" value="#fdcb6e" onchange="updateColor('brightYarrow', this.value)">
+                                <div class="mt-2">
+                                    <small class="text-muted">Highlights, accents, warnings</small><br>
+                                    <code id="hex-brightYarrow">#fdcb6e</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary" onclick="saveCurrentPalette()">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column: Live Preview -->
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-eye"></i> Live Preview</h5>
+                    </div>
+                    <div class="card-body preview-section">
+                        <!-- Buttons Showcase -->
+                        <div class="component-showcase">
+                            <h6><strong>Buttons</strong></h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-primary" id="preview-btn-primary">Primary Button</button>
+                                <button class="btn btn-success" id="preview-btn-success">Success Button</button>
+                                <button class="btn btn-warning" id="preview-btn-warning">Warning Button</button>
+                                <button class="btn btn-danger" id="preview-btn-danger">Danger Button</button>
+                            </div>
+                        </div>
+
+                        <!-- Cards Showcase -->
+                        <div class="component-showcase">
+                            <h6><strong>Cards</strong></h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="stat-card" id="preview-card-primary">
+                                        <h3>127</h3>
+                                        <p><i class="fas fa-check"></i> Primary Card</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="stat-card success" id="preview-card-success">
+                                        <h3>42</h3>
+                                        <p><i class="fas fa-star"></i> Success Card</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="stat-card warning" id="preview-card-warning">
+                                        <h3>89</h3>
+                                        <p><i class="fas fa-exclamation"></i> Warning Card</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="stat-card danger" id="preview-card-danger">
+                                        <h3>15</h3>
+                                        <p><i class="fas fa-times"></i> Danger Card</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alerts Showcase -->
+                        <div class="component-showcase">
+                            <h6><strong>Alerts</strong></h6>
+                            <div class="alert" id="preview-alert-primary" style="border: none;">
+                                <strong><i class="fas fa-info-circle"></i> Primary Alert</strong>
+                                <p class="mb-0">This is what a primary alert looks like with your colors.</p>
+                            </div>
+                            <div class="alert" id="preview-alert-success" style="border: none;">
+                                <strong><i class="fas fa-check-circle"></i> Success Alert</strong>
+                                <p class="mb-0">This is what a success alert looks like with your colors.</p>
+                            </div>
+                            <div class="alert" id="preview-alert-warning" style="border: none;">
+                                <strong><i class="fas fa-exclamation-triangle"></i> Warning Alert</strong>
+                                <p class="mb-0">This is what a warning alert looks like with your colors.</p>
+                            </div>
+                            <div class="alert" id="preview-alert-danger" style="border: none;">
+                                <strong><i class="fas fa-times-circle"></i> Danger Alert</strong>
+                                <p class="mb-0">This is what a danger alert looks like with your colors.</p>
+                            </div>
+                        </div>
+
+                        <!-- Badges Showcase -->
+                        <div class="component-showcase">
+                            <h6><strong>Badges</strong></h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge badge-primary" id="preview-badge-primary" style="font-size: 1rem; padding: 8px 12px;">Primary</span>
+                                <span class="badge badge-success" id="preview-badge-success" style="font-size: 1rem; padding: 8px 12px;">Success</span>
+                                <span class="badge badge-warning" id="preview-badge-warning" style="font-size: 1rem; padding: 8px 12px;">Warning</span>
+                                <span class="badge badge-danger" id="preview-badge-danger" style="font-size: 1rem; padding: 8px 12px;">Danger</span>
+                            </div>
+                        </div>
+
+                        <!-- Link Showcase -->
+                        <div class="component-showcase">
+                            <h6><strong>Links & Text</strong></h6>
+                            <p>This is regular text with a <a href="#" id="preview-link">sample link</a> using Electron Blue.</p>
+                            <p style="color: #2d3436;" id="preview-text-dark">This is dark text using Dracula Orchid.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography Info -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-font"></i> Typography & Framework</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Framework</h6>
+                                <p class="mb-2"><i class="fab fa-bootstrap"></i> <strong>Bootstrap 5.3+</strong></p>
+                                <small class="text-muted">Professional UI components</small>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Icons</h6>
+                                <p class="mb-2"><i class="fab fa-font-awesome"></i> <strong>Font Awesome 6</strong></p>
+                                <small class="text-muted">6,000+ icons available</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Charts</h6>
+                                <p class="mb-2"><i class="fas fa-chart-bar"></i> <strong>Chart.js</strong></p>
+                                <small class="text-muted">Data visualization library</small>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Design Rule</h6>
+                                <p class="mb-2"><i class="fas fa-ban"></i> <strong>Flat Design Only</strong></p>
+                                <small class="text-muted">NO GRADIENTS - Solid colors only</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favicon Picker -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-image"></i> Favicon Picker</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">Select a favicon for your project. Click to select, then use the download button.</p>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h6><strong>Maroon Variants</strong></h6>
+                            </div>
+                        </div>
+                        <div class="row mb-4" id="faviconGridMaroon">
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_maroon.ico" onclick="selectFavicon(this)">
+                                    <img src="../assets/favicons/fav_maroon.ico" alt="Maroon Square" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0">Square</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_maroon_round.ico" onclick="selectFavicon(this)">
+                                    <img src="../assets/favicons/fav_maroon_round.ico" alt="Maroon Round" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0">Rounded</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_maroon_circle.ico" onclick="selectFavicon(this)">
+                                    <img src="../assets/favicons/fav_maroon_circle.ico" alt="Maroon Circle" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0">Circle</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_maroon_circle_centered.ico" onclick="selectFavicon(this)">
+                                    <img src="../assets/favicons/fav_maroon_circle_centered.ico" alt="Maroon Circle Centered" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0">Circle Centered</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h6><strong>White Variants</strong></h6>
+                            </div>
+                        </div>
+                        <div class="row mb-4" id="faviconGridWhite">
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_white.ico" onclick="selectFavicon(this)" style="background-color: #2d3436;">
+                                    <img src="../assets/favicons/fav_white.ico" alt="White Square" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0 text-white">Square</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_white_round.ico" onclick="selectFavicon(this)" style="background-color: #2d3436;">
+                                    <img src="../assets/favicons/fav_white_round.ico" alt="White Round" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0 text-white">Rounded</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_white_circle.ico" onclick="selectFavicon(this)" style="background-color: #2d3436;">
+                                    <img src="../assets/favicons/fav_white_circle.ico" alt="White Circle" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0 text-white">Circle</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-3">
+                                <div class="favicon-option text-center p-3 border rounded" data-favicon="fav_white_circle_centered.ico" onclick="selectFavicon(this)" style="background-color: #2d3436;">
+                                    <img src="../assets/favicons/fav_white_circle_centered.ico" alt="White Circle Centered" style="width: 48px; height: 48px;">
+                                    <p class="small mt-2 mb-0 text-white">Circle Centered</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="text-muted">Selected:</span>
+                            <img id="selectedFaviconPreview" src="../assets/favicons/fav_maroon.ico" alt="Selected Favicon" style="width: 32px; height: 32px;">
+                            <span id="selectedFaviconName" class="fw-bold">fav_maroon.ico</span>
+                            <button class="btn btn-primary btn-sm ms-auto" onclick="downloadSelectedFavicon()">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="btn btn-success btn-sm" onclick="copyFaviconLink()">
+                                <i class="fas fa-link"></i> Copy Link Tag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Toast System -->
+    <script src="../assets/js/toasts.js"></script>
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Design System JS -->
+    <script src="../assets/js/design-system.js"></script>
+
+    <!-- Favicon Picker JS -->
+    <script>
+        let selectedFavicon = 'fav_maroon.ico';
+
+        function selectFavicon(element) {
+            // Remove selected class from all options
+            document.querySelectorAll('.favicon-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selected class to clicked option
+            element.classList.add('selected');
+
+            // Update selected favicon
+            selectedFavicon = element.dataset.favicon;
+
+            // Update preview
+            document.getElementById('selectedFaviconPreview').src = `../assets/favicons/${selectedFavicon}`;
+            document.getElementById('selectedFaviconName').textContent = selectedFavicon;
+        }
+
+        function downloadSelectedFavicon() {
+            const link = document.createElement('a');
+            link.href = `../assets/favicons/${selectedFavicon}`;
+            link.download = selectedFavicon;
+            link.click();
+            if (typeof showToast !== 'undefined') {
+                showToast(`Downloading ${selectedFavicon}`, 'success');
+            }
+        }
+
+        function copyFaviconLink() {
+            const linkTag = `<link rel="icon" type="image/x-icon" href="assets/favicons/${selectedFavicon}">`;
+            navigator.clipboard.writeText(linkTag).then(() => {
+                if (typeof showToast !== 'undefined') {
+                    showToast('Link tag copied to clipboard!', 'success');
+                } else {
+                    alert('Copied: ' + linkTag);
+                }
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                if (typeof showToast !== 'undefined') {
+                    showToast('Failed to copy to clipboard', 'error');
+                }
+            });
+        }
+
+        // Initialize first option as selected
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstOption = document.querySelector('.favicon-option');
+            if (firstOption) {
+                firstOption.classList.add('selected');
+            }
+        });
+    </script>
+</body>
+</html>

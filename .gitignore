@@ -1,0 +1,50 @@
+# Node modules
+node_modules/
+backend/node_modules/
+
+# Environment variables
+.env
+backend/.env
+
+# Logs
+*.log
+npm-debug.log*
+backend/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+*-backup.*
+
+# Docker volumes (if any local data)
+docker-data/
+postgres-data/
+
+# Prisma
+backend/prisma/migrations/
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Archive files (session/phase files can be kept)
+# But excluding any large archives
+*.zip
+*.tar.gz
+*.tgz
